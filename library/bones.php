@@ -31,9 +31,9 @@ need.
 
 function bones_head_cleanup() {
 	// category feeds
-	// remove_action( 'wp_head', 'feed_links_extra', 3 );
+	remove_action( 'wp_head', 'feed_links_extra', 3 );
 	// post and comment feeds
-	// remove_action( 'wp_head', 'feed_links', 2 );
+	remove_action( 'wp_head', 'feed_links', 2 );
 	// EditURI link
 	remove_action( 'wp_head', 'rsd_link' );
 	// windows live writer
@@ -193,19 +193,19 @@ function bones_theme_support() {
 	// to add header image support go here: http://themble.com/support/adding-header-background-image-support/
 
 	// adding post format support
-	add_theme_support( 'post-formats',
-		array(
-			'aside',             // title less blurb
-			'gallery',           // gallery of images
-			'link',              // quick link to other site
-			'image',             // an image
-			'quote',             // a quick quote
-			'status',            // a Facebook like status update
-			'video',             // video
-			'audio',             // audio
-			'chat'               // chat transcript
-		)
-	);
+	// add_theme_support( 'post-formats',
+	// 	array(
+	// 		'aside',             // title less blurb
+	// 		'gallery',           // gallery of images
+	// 		'link',              // quick link to other site
+	// 		'image',             // an image
+	// 		'quote',             // a quick quote
+	// 		'status',            // a Facebook like status update
+	// 		'video',             // video
+	// 		'audio',             // audio
+	// 		'chat'               // chat transcript
+	// 	)
+	// );
 
 	// wp menus
 	add_theme_support( 'menus' );

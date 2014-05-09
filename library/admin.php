@@ -26,12 +26,13 @@ Digging into WP - http://digwp.com/2010/10/customize-wordpress-dashboard/
 
 // disable default dashboard widgets
 function disable_default_dashboard_widgets() {
-	// remove_meta_box( 'dashboard_right_now', 'dashboard', 'core' );    // Right Now Widget
+	remove_meta_box( 'dashboard_right_now', 'dashboard', 'core' );    // Right Now Widget
+	remove_meta_box( 'dashboard_activity', 'dashboard', 'core' );    // Right Now Widget
 	remove_meta_box( 'dashboard_recent_comments', 'dashboard', 'core' ); // Comments Widget
 	remove_meta_box( 'dashboard_incoming_links', 'dashboard', 'core' );  // Incoming Links Widget
 	remove_meta_box( 'dashboard_plugins', 'dashboard', 'core' );         // Plugins Widget
 
-	// remove_meta_box('dashboard_quick_press', 'dashboard', 'core' );   // Quick Press Widget
+	remove_meta_box('dashboard_quick_press', 'dashboard', 'core' );   // Quick Press Widget
 	remove_meta_box( 'dashboard_recent_drafts', 'dashboard', 'core' );   // Recent Drafts Widget
 	remove_meta_box( 'dashboard_primary', 'dashboard', 'core' );         //
 	remove_meta_box( 'dashboard_secondary', 'dashboard', 'core' );       //
@@ -58,42 +59,16 @@ For more information on creating Dashboard Widgets, view:
 http://digwp.com/2010/10/customize-wordpress-dashboard/
 */
 
-// RSS Dashboard Widget
-function bones_rss_dashboard_widget() {
-	if ( function_exists( 'fetch_feed' ) ) {
-		// include_once( ABSPATH . WPINC . '/feed.php' );               // include the required file
-		$feed = fetch_feed( 'http://feeds.feedburner.com/wpcandy' );        // specify the source feed
-		if (is_wp_error($feed)) {
-			$limit = 0;
-			$items = 0;
-		} else {
-			$limit = $feed->get_item_quantity(7);                        // specify number of items
-			$items = $feed->get_items(0, $limit);                        // create an array of items
-		}
-	}
-	if ($limit == 0) echo '<div>The RSS Feed is either empty or unavailable.</div>';   // fallback message
-	else foreach ($items as $item) { ?>
-
-	<h4 style="margin-bottom: 0;">
-		<a href="<?php echo $item->get_permalink(); ?>" title="<?php echo mysql2date( __( 'j F Y @ g:i a', 'bonestheme' ), $item->get_date( 'Y-m-d H:i:s' ) ); ?>" target="_blank">
-			<?php echo $item->get_title(); ?>
-		</a>
-	</h4>
-	<p style="margin-top: 0.5em;">
-		<?php echo substr($item->get_description(), 0, 200); ?>
-	</p>
-	<?php }
+// Dashboard intro
+function saal_dashboard_help() {
+	echo '<p>From this admin panel you can control all of the editable content of your website. Simply use the navigation menues to the left to target and edit the content you wish to change/update.  You can also update editable content from the front-end of the website once you have logged in navigating to the content you wish to edit and clicking the edit button in the admin bar at the top of the screen.</p>';
+	echo 'Need help? Let us know! <br><br><b>Wes DeKoninck</b><br><b>Email: </b><a href="mailto:wes@saal.net?Subject=Support for ' . get_bloginfo('url') . '">wes@saal.net</a><br><b>Phone:</b> 260.432.7225 - x117</p><br>SAAL Advertising<br>6528 Constitution Dr.<br>Fort Wayne, IN 46804<br><br>';
 }
 
 // calling all custom dashboard widgets
 function bones_custom_dashboard_widgets() {
-	wp_add_dashboard_widget( 'bones_rss_dashboard_widget', __( 'Recently on Themble (Customize on admin.php)', 'bonestheme' ), 'bones_rss_dashboard_widget' );
-	/*
-	Be sure to drop any other created Dashboard Widgets
-	in this function and they will all load.
-	*/
+	wp_add_dashboard_widget('saal_dashboard_help', __('Welcome to your Admin Dashboard', 'bonestheme'), 'saal_dashboard_help');
 }
-
 
 // removing the dashboard widgets
 add_action( 'admin_menu', 'disable_default_dashboard_widgets' );
@@ -139,5 +114,12 @@ function bones_custom_admin_footer() {
 
 // adding it to the admin area
 add_filter( 'admin_footer_text', 'bones_custom_admin_footer' );
+
+// Adding dashboard menu items
+add_action( 'admin_menu', 'register_my_custom_menu_page' );
+function register_my_custom_menu_page(){
+    // Add Menu Item for Navigation
+    add_menu_page( 'Website Options', 'Website Options', 'edit_pages', 'nav-menus.php', '', 'dashicons-menu' , 3 );
+}
 
 ?>
