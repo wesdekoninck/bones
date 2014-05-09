@@ -119,7 +119,7 @@ add_filter( 'admin_footer_text', 'bones_custom_admin_footer' );
 add_action( 'admin_menu', 'register_my_custom_menu_page' );
 function register_my_custom_menu_page(){
     // Add Menu Item for Navigation
-    add_menu_page( 'Website Menus', 'Website Menus', 'edit_pages', 'nav-menus.php', '', 'dashicons-menu' , 3 );
+    add_menu_page( 'Menus', 'Menus', 'edit_pages', 'nav-menus.php', '', 'dashicons-menu' , 3 );
 }
 
 ?>
