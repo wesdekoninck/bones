@@ -12,5 +12,4 @@ function bones_flush_rewrite_rules() {
 	flush_rewrite_rules();
 }
 
-
 ?>
